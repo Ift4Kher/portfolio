@@ -14,6 +14,18 @@ import {
   AdminUser
 } from '../types';
 
+import {
+  fallbackHero,
+  fallbackAbout,
+  fallbackServices,
+  fallbackSkills,
+  fallbackProjects,
+  fallbackEducation,
+  fallbackProcess,
+  fallbackSettings,
+  fallbackSocials
+} from './fallbackData';
+
 const API_BASE_URL = (((import.meta as any).env?.VITE_API_URL as string) || '/api').replace(/\/$/, '');
 
 class ApiService {
@@ -57,6 +69,11 @@ class ApiService {
       headers
     });
 
+    const contentType = response.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      throw new Error(`Invalid content-type from server: ${contentType}`);
+    }
+
     const data = await response.json();
 
     if (!response.ok) {
@@ -69,65 +86,136 @@ class ApiService {
     return data;
   }
 
-  // Public Endpoints
+  // Public Endpoints with Fallback
   async getHero(): Promise<HeroData> {
-    const res = await this.request<HeroData>('/hero');
-    return res.data;
+    try {
+      const res = await this.request<HeroData>('/hero');
+      return res.data || fallbackHero;
+    } catch {
+      return fallbackHero;
+    }
   }
 
   async getAbout(): Promise<AboutData> {
-    const res = await this.request<AboutData>('/about');
-    return res.data;
+    try {
+      const res = await this.request<AboutData>('/about');
+      return res.data || fallbackAbout;
+    } catch {
+      return fallbackAbout;
+    }
   }
 
   async getServices(): Promise<ServiceItem[]> {
-    const res = await this.request<ServiceItem[]>('/services');
-    return res.data;
+    try {
+      const res = await this.request<ServiceItem[]>('/services');
+      return (res.data && res.data.length > 0) ? res.data : fallbackServices;
+    } catch {
+      return fallbackServices;
+    }
   }
 
   async getSkills(): Promise<SkillItem[]> {
-    const res = await this.request<SkillItem[]>('/skills');
-    return res.data;
+    try {
+      const res = await this.request<SkillItem[]>('/skills');
+      return (res.data && res.data.length > 0) ? res.data : fallbackSkills;
+    } catch {
+      return fallbackSkills;
+    }
   }
 
   async getFeaturedProjects(): Promise<ProjectItem[]> {
-    const res = await this.request<ProjectItem[]>('/projects/featured');
-    return res.data;
+    try {
+      const res = await this.request<ProjectItem[]>('/projects/featured');
+      return (res.data && res.data.length > 0) ? res.data : fallbackProjects.filter(p => p.featured);
+    } catch {
+      return fallbackProjects.filter(p => p.featured);
+    }
   }
 
   async getProjects(category: string = 'All', search: string = ''): Promise<ProjectItem[]> {
-    let url = `/projects?category=${encodeURIComponent(category)}`;
-    if (search) url += `&search=${encodeURIComponent(search)}`;
-    const res = await this.request<ProjectItem[]>(url);
-    return res.data;
+    try {
+      let url = `/projects?category=${encodeURIComponent(category)}`;
+      if (search) url += `&search=${encodeURIComponent(search)}`;
+      const res = await this.request<ProjectItem[]>(url);
+      if (res.data && res.data.length > 0) return res.data;
+    } catch {
+      // Fallback filtering
+    }
+
+    let filtered = [...fallbackProjects];
+    if (category && category !== 'All') {
+      filtered = filtered.filter(p => p.categoriesList?.includes(category));
+    }
+    if (search) {
+      const s = search.toLowerCase();
+      filtered = filtered.filter(p =>
+        p.title.toLowerCase().includes(s) ||
+        p.shortDescription.toLowerCase().includes(s) ||
+        p.fullDescription.toLowerCase().includes(s)
+      );
+    }
+    return filtered;
   }
 
   async getProjectBySlug(slug: string): Promise<ProjectItem> {
-    const res = await this.request<ProjectItem>(`/projects/slug/${encodeURIComponent(slug)}`);
-    return res.data;
+    try {
+      const res = await this.request<ProjectItem>(`/projects/slug/${encodeURIComponent(slug)}`);
+      if (res.data) return res.data;
+    } catch {
+      // Fallback search
+    }
+
+    const found = fallbackProjects.find(p => p.slug === slug);
+    if (found) return found;
+    return fallbackProjects[0];
   }
 
   async getEducation(): Promise<EducationItem[]> {
-    const res = await this.request<EducationItem[]>('/education');
-    return res.data;
+    try {
+      const res = await this.request<EducationItem[]>('/education');
+      return (res.data && res.data.length > 0) ? res.data : fallbackEducation;
+    } catch {
+      return fallbackEducation;
+    }
   }
 
   async getProcessSteps(): Promise<ProcessStepItem[]> {
-    const res = await this.request<ProcessStepItem[]>('/process');
-    return res.data;
+    try {
+      const res = await this.request<ProcessStepItem[]>('/process');
+      return (res.data && res.data.length > 0) ? res.data : fallbackProcess;
+    } catch {
+      return fallbackProcess;
+    }
   }
 
   async getSettings(): Promise<{ settings: SiteSettingsData; socials: SocialLinkItem[] }> {
-    const res = await this.request<{ settings: SiteSettingsData; socials: SocialLinkItem[] }>('/settings');
-    return res.data;
+    try {
+      const res = await this.request<{ settings: SiteSettingsData; socials: SocialLinkItem[] }>('/settings');
+      if (res.data?.settings) return res.data;
+    } catch {
+      // Fallback
+    }
+    return { settings: fallbackSettings, socials: fallbackSocials };
   }
 
   async submitContact(data: { name: string; email: string; subject: string; message: string }): Promise<ContactMessageItem> {
-    const res = await this.request<ContactMessageItem>('/contact', {
-      method: 'POST',
-      body: JSON.stringify(data)
-    });
-    return res.data;
+    try {
+      const res = await this.request<ContactMessageItem>('/contact', {
+        method: 'POST',
+        body: JSON.stringify(data)
+      });
+      return res.data;
+    } catch {
+      return {
+        id: 'msg-fallback',
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
+        read: false,
+        createdAt: new Date().toISOString()
+      };
+    }
   }
 
   // Admin Auth
@@ -156,11 +244,22 @@ class ApiService {
   }
 
   async getDashboardStats(): Promise<DashboardStats> {
-    const res = await this.request<DashboardStats>('/settings/stats');
-    return res.data;
+    try {
+      const res = await this.request<DashboardStats>('/settings/stats');
+      return res.data;
+    } catch {
+      return {
+        totalProjects: fallbackProjects.length,
+        publishedProjects: fallbackProjects.length,
+        featuredProjects: fallbackProjects.filter(p => p.featured).length,
+        totalServices: fallbackServices.length,
+        totalSkills: fallbackSkills.length,
+        unreadMessages: 0
+      };
+    }
   }
 
-  // Admin Content Management
+  // Admin Hero & About
   async updateHero(data: Partial<HeroData>): Promise<HeroData> {
     const res = await this.request<HeroData>('/hero', {
       method: 'PUT',
@@ -177,6 +276,7 @@ class ApiService {
     return res.data;
   }
 
+  // Admin Services
   async createService(data: Partial<ServiceItem>): Promise<ServiceItem> {
     const res = await this.request<ServiceItem>('/services', {
       method: 'POST',
@@ -197,6 +297,7 @@ class ApiService {
     await this.request(`/services/${id}`, { method: 'DELETE' });
   }
 
+  // Admin Skills
   async createSkill(data: Partial<SkillItem>): Promise<SkillItem> {
     const res = await this.request<SkillItem>('/skills', {
       method: 'POST',
@@ -304,8 +405,12 @@ class ApiService {
 
   // Admin Messages
   async getMessages(): Promise<ContactMessageItem[]> {
-    const res = await this.request<ContactMessageItem[]>('/contact');
-    return res.data;
+    try {
+      const res = await this.request<ContactMessageItem[]>('/contact');
+      return res.data || [];
+    } catch {
+      return [];
+    }
   }
 
   async markMessageRead(id: string, read: boolean = true): Promise<ContactMessageItem> {
@@ -327,6 +432,26 @@ class ApiService {
       body: JSON.stringify(data)
     });
     return res.data;
+  }
+
+  async createSocialLink(data: Partial<SocialLinkItem>): Promise<SocialLinkItem> {
+    const res = await this.request<SocialLinkItem>('/settings/socials', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+    return res.data;
+  }
+
+  async updateSocialLink(id: string, data: Partial<SocialLinkItem>): Promise<SocialLinkItem> {
+    const res = await this.request<SocialLinkItem>(`/settings/socials/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data)
+    });
+    return res.data;
+  }
+
+  async deleteSocialLink(id: string): Promise<void> {
+    await this.request(`/settings/socials/${id}`, { method: 'DELETE' });
   }
 
   // Upload File
