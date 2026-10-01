@@ -32,9 +32,9 @@ async function main() {
     await prisma.hero.create({
       data: {
         greeting: "Hello, I'm",
-        name: "Md Iftakhar Ahmed Rifat",
-        title: "Full-Stack Web Developer",
-        subtitle: "Crafting high-performance, responsive, and visually stunning web applications with modern architecture.",
+        name: "MD Iftakhar Ahmed Rifat",
+        title: "Full-Stack Web Developer & UI Designer",
+        subtitle: "AI-Assisted Full Stack Web Developer specializing in crafting responsive web applications, secure dashboards, and scalable databases.",
         profileImage: "/images/rifat-hero.png",
         primaryCtaText: "View Featured Work",
         primaryCtaLink: "#featured-projects",
@@ -50,12 +50,12 @@ async function main() {
   if (!existingAbout) {
     await prisma.about.create({
       data: {
-        title: "Passionate Full-Stack Developer & UI Architect",
-        description: "I am Md Iftakhar Ahmed Rifat, a dedicated Web Developer with a strong foundation in modern frontend architecture and robust backend API development.",
-        bio: "Graduated with a BSc in Computer Science & Engineering from Eastern University. I specialize in crafting clean, scalable web applications, real-time management dashboards, and responsive digital experiences. My core focus lies in performance optimization, responsive layouts, and seamless database design.",
-        yearsExperience: 4,
-        completedProjects: 30,
-        clientsServed: 18,
+        title: "Full-Stack Web Developer & Graphic Designer",
+        description: "I am MD Iftakhar Ahmed Rifat, an AI-Assisted Full Stack Web Developer and UI designer with a passion for building clean, user-friendly, and robust web applications.",
+        bio: "BSc in Computer Science & Engineering graduate from Eastern University with professional Graphic Design certification from UY LAB. Experienced in developing dynamic web applications, administrative dashboards, authentication systems, and relational MySQL databases using modern frontend and backend technologies.",
+        yearsExperience: 2,
+        completedProjects: 15,
+        clientsServed: 10,
         image: "/images/rifat-hero.png"
       }
     });
@@ -527,13 +527,13 @@ async function main() {
   }
   console.log('🖼️ 10 Sample Projects & Galleries seeded');
 
-  // 9. Education (Eastern University, BSc CSE, CGPA 2.72)
+  // 9. Education
   const existingEdu = await prisma.education.findFirst();
   if (!existingEdu) {
     await prisma.education.createMany({
       data: [
         {
-          degree: "BSc in Computer Science & Engineering",
+          degree: "BSc in Computer Science & Engineering (CSE)",
           institution: "Eastern University",
           result: "CGPA: 2.72",
           startDate: "2020",
@@ -543,13 +543,23 @@ async function main() {
           published: true
         },
         {
-          degree: "Higher Secondary Certificate (HSC)",
-          institution: "Dhaka Regional College",
-          result: "GPA: 4.50",
-          startDate: "2017",
-          endDate: "2019",
-          description: "Focused on Science background with Higher Mathematics, Physics, and Chemistry.",
+          degree: "Higher Secondary Certificate (H.S.C)",
+          institution: "Shah Makhdum College, Rajshahi",
+          result: "GPA: 4.67 (Out of 5.00)",
+          startDate: "2018",
+          endDate: "2020",
+          description: "Science Group, Rajshahi Board. Focused on Higher Mathematics, Physics, and Chemistry.",
           displayOrder: 2,
+          published: true
+        },
+        {
+          degree: "Secondary School Certificate (S.S.C)",
+          institution: "Halima Begum Academy Secondary High School",
+          result: "GPA: 4.94 (Out of 5.00)",
+          startDate: "2016",
+          endDate: "2018",
+          description: "Science Group, Jessore Board. Distinction in General Science and Mathematics.",
+          displayOrder: 3,
           published: true
         }
       ]
@@ -592,13 +602,13 @@ async function main() {
   if (!existingSetting) {
     await prisma.siteSetting.create({
       data: {
-        siteTitle: "Md Iftakhar Ahmed Rifat — Web Developer Portfolio",
-        metaDescription: "Professional portfolio and project showcase of Md Iftakhar Ahmed Rifat, Full-Stack Web Developer.",
-        contactEmail: "rifat.dev@example.com",
-        contactPhone: "+880 1700 000000",
-        contactLocation: "Dhaka, Bangladesh",
+        siteTitle: "MD Iftakhar Ahmed Rifat — Web Developer Portfolio",
+        metaDescription: "Professional portfolio and project showcase of MD Iftakhar Ahmed Rifat, AI-Assisted Full-Stack Web Developer & UI Designer.",
+        contactEmail: "iftakherahmed73214@gmail.com",
+        contactPhone: "+880 1815273746",
+        contactLocation: "Mirpur 10, Dhaka, Bangladesh",
         cvUrl: "/cv/rifat-cv.pdf",
-        footerText: "© 2026 Md Iftakhar Ahmed Rifat. Engineered with passion & modern web technologies."
+        footerText: "© 2026 MD Iftakhar Ahmed Rifat. All rights reserved."
       }
     });
     console.log('⚙️ Site settings seeded');
