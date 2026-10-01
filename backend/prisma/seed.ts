@@ -535,17 +535,17 @@ async function main() {
         {
           degree: "BSc in Computer Science & Engineering (CSE)",
           institution: "Eastern University",
-          result: "CGPA: 2.72",
+          result: null,
           startDate: "2022",
           endDate: "2026",
-          description: "Pursuing Bachelor of Science in CSE with coursework in Software Engineering, Database Management Systems, Data Structures & Algorithms, Web Technologies, and Computer Networks.",
+          description: "Pursuing Bachelor of Science in Computer Science & Engineering with coursework in Software Engineering, Database Management Systems, Data Structures & Algorithms, Web Technologies, and Computer Networks.",
           displayOrder: 1,
           published: true
         },
         {
           degree: "Higher Secondary Certificate (H.S.C)",
           institution: "Shah Makhdum College, Rajshahi",
-          result: "GPA: 4.67 (Out of 5.00)",
+          result: null,
           startDate: "2018",
           endDate: "2020",
           description: "Science Group, Rajshahi Board. Focused on Higher Mathematics, Physics, and Chemistry.",
