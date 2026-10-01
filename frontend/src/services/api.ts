@@ -14,7 +14,7 @@ import {
   AdminUser
 } from '../types';
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = (((import.meta as any).env?.VITE_API_URL as string) || '/api').replace(/\/$/, '');
 
 class ApiService {
   private token: string | null = null;
@@ -50,10 +50,11 @@ class ApiService {
       headers['Authorization'] = `Bearer ${token}`;
     }
 
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    const url = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+
+    const response = await fetch(url, {
       ...options,
-      headers,
-      credentials: 'same-origin'
+      headers
     });
 
     const data = await response.json();
