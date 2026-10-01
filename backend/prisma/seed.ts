@@ -536,9 +536,9 @@ async function main() {
           degree: "BSc in Computer Science & Engineering (CSE)",
           institution: "Eastern University",
           result: "CGPA: 2.72",
-          startDate: "2020",
-          endDate: "2024",
-          description: "Completed comprehensive coursework in Software Engineering, Database Management Systems, Data Structures & Algorithms, Web Technologies, and Computer Networks.",
+          startDate: "2022",
+          endDate: "2026",
+          description: "Pursuing Bachelor of Science in CSE with coursework in Software Engineering, Database Management Systems, Data Structures & Algorithms, Web Technologies, and Computer Networks.",
           displayOrder: 1,
           published: true
         },
@@ -550,16 +550,6 @@ async function main() {
           endDate: "2020",
           description: "Science Group, Rajshahi Board. Focused on Higher Mathematics, Physics, and Chemistry.",
           displayOrder: 2,
-          published: true
-        },
-        {
-          degree: "Secondary School Certificate (S.S.C)",
-          institution: "Halima Begum Academy Secondary High School",
-          result: "GPA: 4.94 (Out of 5.00)",
-          startDate: "2016",
-          endDate: "2018",
-          description: "Science Group, Jessore Board. Distinction in General Science and Mathematics.",
-          displayOrder: 3,
           published: true
         }
       ]

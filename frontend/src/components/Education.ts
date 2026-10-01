@@ -25,13 +25,13 @@ export function renderEducation(): string {
       skills: null
     },
     {
-      startDate: '2020',
-      endDate: '2024',
+      startDate: '2022',
+      endDate: '2026',
       isCurrent: false,
       label: 'EDUCATION',
       role: 'BSc IN COMPUTER SCIENCE & ENGINEERING',
       title: 'Eastern University',
-      desc: 'Completed Bachelor of Science in CSE with CGPA 2.72. Comprehensive coursework in Software Engineering, Database Management Systems, Data Structures & Algorithms, Web Technologies, and Computer Networks.',
+      desc: 'Pursuing Bachelor of Science in CSE with CGPA 2.72. Comprehensive coursework in Software Engineering, Database Management Systems, Data Structures & Algorithms, Web Technologies, and Computer Networks.',
       iconHtml: `<svg class="w-7 h-7 text-[#94A3B8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14v7"/></svg>`,
       iconWrapClass: 'border-white/10 bg-white/5',
       skills: null
@@ -46,18 +46,6 @@ export function renderEducation(): string {
       desc: 'Science Group under Rajshahi Board with GPA 4.67 (out of 5.00). Focused on Higher Mathematics, Physics, and Chemistry.',
       iconHtml: `<svg class="w-6 h-6 text-[#A855F7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>`,
       iconWrapClass: 'border-[#A855F7]/30 bg-[#A855F7]/5',
-      skills: null
-    },
-    {
-      startDate: '2016',
-      endDate: '2018',
-      isCurrent: false,
-      label: 'EDUCATION',
-      role: 'SECONDARY SCHOOL CERTIFICATE (SSC)',
-      title: 'Halima Begum Academy Secondary High School',
-      desc: 'Science Group under Jessore Board with GPA 4.94 (out of 5.00). Academic excellence in General Science and Mathematics.',
-      iconHtml: `<svg class="w-6 h-6 text-[#38BDF8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342" /></svg>`,
-      iconWrapClass: 'border-[#38BDF8]/30 bg-[#38BDF8]/5',
       skills: null
     }
   ];
